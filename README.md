@@ -32,6 +32,10 @@ Welcome to **Code Quest**, a fun and interactive web app where you can test your
 
 ## 🔥 Preview
 
+
+### Landing Page
+![ Landing Page](./screenshots/landing_pg.png)
+
 ### 🟨 JavaScript Levels  
 ![JavaScript Levels](./screenshots/javascript.png)
 
