@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Java Code Quest - Levels</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    h1 {
+      margin-bottom: 2rem;
+    }
+
+    .level-card {
+      background-color: #272727;
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+      box-shadow: 0 0 10pxr rgba(242, 243, 251, 0.872);
+    }
+
+    .level-card:hover {
+      transform: scale(1.03);
+      /* box-shadow: 0 0 20px #00bcd4; */
+    }
+
+    .level-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .difficulty {
+      font-weight: bold;
+      font-size: 0.9rem;
+      color: #00bcd4;
+    }
+
+    .btn-play {
+      background-color: peachpuff;
+      border: none;
+      color: #1e1e1e;
+      font-weight: bold;
+      border-radius: 6px;
+      padding: 0.5rem 1.2rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-play:hover {
+      background-color: #0097a7;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1 class="mt-5 center">Java Code Quest - Choose Your Challenge</h1>
+  <div class="container">
+    <div class="row g-4 justify-content-center">
+
+      <div class="col-md-6 col-lg-4 mt-5">
+        <div class="level-card">
+          <div class="level-title">Challenge 1: Hello Debug</div>
+          <div class="difficulty">Easy</div>
+          <p>Program to Fix a basic syntax error in a simple Java method.</p>
+          <a href="java_easy.html" class="btn btn-play">Play</a>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 mt-5">
+        <div class="level-card">
+          <div class="level-title">Challenge 2: Loop Maze</div>
+          <div class="difficulty">Medium</div>
+          <p>Program using loops & conditionals to solve a puzzle.</p>
+          <a href="java_medium.html" class="btn btn-play">Play</a>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 mt-5">
+        <div class="level-card">
+          <div class="level-title">Challenge 3: Class Architect</div>
+          <div class="difficulty">Hard</div>
+          <p>Design and implement a class-based system to simulate a task.</p>
+          <a href="java_hard.html" class="btn btn-play">Play</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('languageSelect').addEventListener('change', function () {
+      const selected = this.value;
+      if (selected === 'python') {
+        window.location.href = 'pylevels.html';
+      } else if (selected === 'javascript') {
+        window.location.href = 'levels.html';
+      } else if (selected === 'java') {
+        window.location.href = 'javalevels.html'; // ✅ new page for Java
+      }
+    });
+  </script>
+</body>
+
+</html>

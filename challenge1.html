@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Code Quest - Challenge 2</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 1500px;
+      margin: auto;
+    }
+    h1 {
+      margin-bottom: 1rem;
+    }
+    .problem-description {
+      background: #272727;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      background: #141414;
+      color: #00ffa6;
+      border: none;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      padding: 1rem;
+      resize: vertical;
+    }
+    .console {
+      background: #141414;
+      color: #00ffa6;
+      padding: 1rem;
+      border-radius: 6px;
+      height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    button {
+      margin-top: 1rem;
+      background-color: #00bcd4;
+      border: none;
+      color: white;
+      font-weight: bold;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0097a7;
+    }
+  </style>
+</head>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
+<body>
+  <div class="container">
+    <h1>Challenge 1: Sum of Two Numbers</h1>
+
+    <div class="problem-description">
+      <p><strong>Problem:</strong> Write a JavaScript function <code>sum(a, b)</code> that returns the sum of two numbers.</p>
+      <p>Example:</p>
+      <pre>sum(3, 5) should return 8</pre>
+    </div>
+
+    <label for="code">Write your function below:</label>
+    <textarea id="code" spellcheck="false">
+// Write your sum function here
+function sum(a, b) {
+  // Your code
+}
+    </textarea>
+     <div id="button-container" style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem;">
+      <button id="prevBtn">⬅️ Previous</button>
+      <button id="runBtn">Run Code</button>
+      <button id="nextBtn">➡️ Next</button>
+    </div>
+
+    <div id="scoreDisplay" style="text-align: center; margin-top: 0.5rem; font-weight: bold;">
+      Score: 0 / 25
+    </div>
+
+    <div class="console" id="output"></div>
+    
+  </div>
+
+  <script>
+  // ✅ Firebase config — untouched
+  const firebaseConfig = {
+    apiKey: "AIzaSyBTqasiZ6zn3D2oFdtwQFR8YowBGyUTzoI",
+    authDomain: "code-quest-c5cc6.firebaseapp.com",
+    projectId: "code-quest-c5cc6",
+    storageBucket: "code-quest-c5cc6.firebasestorage.app",
+    messagingSenderId: "166511404658",
+    appId: "1:166511404658:web:1d78060d55a26eaff884eb"
+  };
+
+  // Medium-Level JavaScript Challenges
+
+const tasks = [
+  {
+    title: "Challenge 1: Sum of Two Numbers",
+    functionName: "sum",
+    test: "sum(3, 5)",
+    expected: 8,
+    description: "Write a JavaScript function <code>sum(args)</code> that returns the sum of two numbers.",
+    example: "sum(3, 5) should return 8",
+    starterCode: "function sum(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 2: Multiply Two Numbers",
+    functionName: "multiply",
+    test: "multiply(4, 6)",
+    expected: 24,
+    description: "Write a JavaScript function <code>multiply(args)</code> that returns the product of two numbers.",
+    example: "multiply(4, 6) should return 24",
+    starterCode: "function multiply(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 3: Subtract Two Numbers",
+    functionName: "subtract",
+    test: "subtract(10, 4)",
+    expected: 6,
+    description: "Write a JavaScript function <code>subtract(args)</code> that returns the result of subtracting b from a.",
+    example: "subtract(10, 4) should return 6",
+    starterCode: "function subtract(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 4: Divide Two Numbers",
+    functionName: "divide",
+    test: "divide(20, 4)",
+    expected: 5,
+    description: "Write a JavaScript function <code>divide(args)</code> that returns the result of dividing a by b.",
+    example: "divide(20, 4) should return 5",
+    starterCode: "function divide(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 5: Square a Number",
+    functionName: "square",
+    test: "square(5)",
+    expected: 25,
+    description: "Write a JavaScript function <code>square(args)</code> that returns the square of a number.",
+    example: "square(5) should return 25",
+    starterCode: "function square(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 6: Cube a Number",
+    functionName: "cube",
+    test: "cube(3)",
+    expected: 27,
+    description: "Write a JavaScript function <code>cube(args)</code> that returns the cube of a number.",
+    example: "cube(3) should return 27",
+    starterCode: "function cube(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 7: Check Even Number",
+    functionName: "isEven",
+    test: "isEven(4)",
+    expected: true,
+    description: "Write a JavaScript function <code>isEven(args)</code> that checks if a number is even.",
+    example: "isEven(4) should return true",
+    starterCode: "function isEven(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 8: Check Odd Number",
+    functionName: "isOdd",
+    test: "isOdd(7)",
+    expected: true,
+    description: "Write a JavaScript function <code>isOdd(args)</code> that checks if a number is odd.",
+    example: "isOdd(7) should return true",
+    starterCode: "function isOdd(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 9: Get First Element",
+    functionName: "firstElement",
+    test: "firstElement([1, 2, 3])",
+    expected: 1,
+    description: "Write a JavaScript function <code>firstElement(args)</code> that returns the first element of an array.",
+    example: "firstElement([1, 2, 3]) should return 1",
+    starterCode: "function firstElement(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 10: Get Last Element",
+    functionName: "lastElement",
+    test: "lastElement([1, 2, 3])",
+    expected: 3,
+    description: "Write a JavaScript function <code>lastElement(args)</code> that returns the last element of an array.",
+    example: "lastElement([1, 2, 3]) should return 3",
+    starterCode: "function lastElement(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 11: Convert to Uppercase",
+    functionName: "toUpper",
+    test: "toUpper('hello')",
+    expected: "HELLO",
+    description: "Write a JavaScript function <code>toUpper(args)</code> that converts a string to uppercase.",
+    example: "toUpper('hello') should return HELLO",
+    starterCode: "function toUpper(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 12: Convert to Lowercase",
+    functionName: "toLower",
+    test: "toLower('HELLO')",
+    expected: "hello",
+    description: "Write a JavaScript function <code>toLower(args)</code> that converts a string to lowercase.",
+    example: "toLower('HELLO') should return hello",
+    starterCode: "function toLower(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 13: Get String Length",
+    functionName: "strLength",
+    test: "strLength('abc')",
+    expected: 3,
+    description: "Write a JavaScript function <code>strLength(args)</code> that returns the length of a string.",
+    example: "strLength('abc') should return 3",
+    starterCode: "function strLength(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 14: Reverse String",
+    functionName: "reverseStr",
+    test: "reverseStr('abc')",
+    expected: "cba",
+    description: "Write a JavaScript function <code>reverseStr(args)</code> that returns the reversed version of a string.",
+    example: "reverseStr('abc') should return cba",
+    starterCode: "function reverseStr(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 15: Check Positive",
+    functionName: "isPositive",
+    test: "isPositive(5)",
+    expected: true,
+    description: "Write a JavaScript function <code>isPositive(args)</code> that checks if a number is positive.",
+    example: "isPositive(5) should return true",
+    starterCode: "function isPositive(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 16: Check Negative",
+    functionName: "isNegative",
+    test: "isNegative(-2)",
+    expected: true,
+    description: "Write a JavaScript function <code>isNegative(args)</code> that checks if a number is negative.",
+    example: "isNegative(-2) should return true",
+    starterCode: "function isNegative(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 17: Absolute Value",
+    functionName: "absolute",
+    test: "absolute(-10)",
+    expected: 10,
+    description: "Write a JavaScript function <code>absolute(args)</code> that returns the absolute value of a number.",
+    example: "absolute(-10) should return 10",
+    starterCode: "function absolute(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 18: Increment Number",
+    functionName: "increment",
+    test: "increment(7)",
+    expected: 8,
+    description: "Write a JavaScript function <code>increment(args)</code> that returns the number incremented by 1.",
+    example: "increment(7) should return 8",
+    starterCode: "function increment(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 19: Decrement Number",
+    functionName: "decrement",
+    test: "decrement(7)",
+    expected: 6,
+    description: "Write a JavaScript function <code>decrement(args)</code> that returns the number decremented by 1.",
+    example: "decrement(7) should return 6",
+    starterCode: "function decrement(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 20: Get Remainder",
+    functionName: "remainder",
+    test: "remainder(10, 3)",
+    expected: 1,
+    description: "Write a JavaScript function <code>remainder(args)</code> that returns the remainder after dividing a by b.",
+    example: "remainder(10, 3) should return 1",
+    starterCode: "function remainder(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 21: Get Max",
+    functionName: "getMax",
+    test: "getMax(4, 9)",
+    expected: 9,
+    description: "Write a JavaScript function <code>getMax(args)</code> that returns the maximum of two numbers.",
+    example: "getMax(4, 9) should return 9",
+    starterCode: "function getMax(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 22: Get Min",
+    functionName: "getMin",
+    test: "getMin(4, 9)",
+    expected: 4,
+    description: "Write a JavaScript function <code>getMin(args)</code> that returns the minimum of two numbers.",
+    example: "getMin(4, 9) should return 4",
+    starterCode: "function getMin(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 23: Repeat String",
+    functionName: "repeatStr",
+    test: "repeatStr('a', 3)",
+    expected: "aaa",
+    description: "Write a JavaScript function <code>repeatStr(args)</code> that returns a string repeated n times.",
+    example: "repeatStr('a', 3) should return aaa",
+    starterCode: "function repeatStr(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 24: Concatenate Strings",
+    functionName: "concat",
+    test: "concat('Hello', 'World')",
+    expected: "HelloWorld",
+    description: "Write a JavaScript function <code>concat(args)</code> that concatenates two strings.",
+    example: "concat('Hello', 'World') should return HelloWorld",
+    starterCode: "function concat(args) {\n  // your code\n}"
+  },
+  {
+    title: "Challenge 25: Check Equal",
+    functionName: "isEqual",
+    test: "isEqual(3, 3)",
+    expected: true,
+    description: "Write a JavaScript function <code>isEqual(args)</code> that checks if two numbers are equal.",
+    example: "isEqual(3, 3) should return true",
+    starterCode: "function isEqual(args) {\n  // your code\n}"
+  }
+];
+
+ 
+    let currentTask = 0;
+    let score = 0;
+
+    const runBtn = document.getElementById("runBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const scoreDisplay = document.getElementById("scoreDisplay");
+    const codeArea = document.getElementById("code");
+    const output = document.getElementById("output");
+    const taskTitle = document.querySelector("h1");
+    const descriptionBox = document.querySelector(".problem-description");
+
+    const loadTask = (index) => {
+      const task = tasks[index];
+      taskTitle.textContent = task.title;
+      descriptionBox.innerHTML = `
+        <p><strong>Problem:</strong> ${task.description}</p>
+        <p>Example:</p>
+        <pre>${task.example}</pre>
+      `;
+      codeArea.value = task.starterCode;
+      output.textContent = "";
+      scoreDisplay.textContent = `Score: ${score} / ${tasks.length}`;
+    };
+
+    runBtn.addEventListener("click", () => {
+      const task = tasks[currentTask];
+      const userCode = codeArea.value;
+      try {
+        const userFunc = new Function(userCode + "; return " + task.test + ";");
+        const result = userFunc();
+        if (result === task.expected) {
+          output.textContent = `✅ Correct! ${task.test} returned ${result}`;
+          output.style.color = "#00ff00";
+          score++;
+          scoreDisplay.textContent = `Score: ${score} / ${tasks.length}`;
+        } else {
+          output.textContent = `❌ Incorrect result: ${task.test} returned ${result}`;
+          output.style.color = "#ff5555";
+        }
+      } catch (err) {
+        output.textContent = "❌ Error: " + err.message;
+        output.style.color = "#ff5555";
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentTask < tasks.length - 1) {
+        currentTask++;
+        loadTask(currentTask);
+      }
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (currentTask > 0) {
+        currentTask--;
+        loadTask(currentTask);
+      }
+    });
+    // Load initial task
+    loadTask(currentTask);
+  </script>
+</body>
+</html>

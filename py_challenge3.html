@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Python Easy Challenges</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: plum;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 10px;
+    }
+    .problem {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      color: #fff;
+      min-height: 3rem;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      background-color: #1e1e1e;
+      color : orange;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 1rem;
+      font-family: monospace;
+      font-size: 0.95rem;
+      resize: vertical;
+    }
+    .btn-group {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    button {
+      background-color: plum;
+      border: none;
+      color: #1e1e1e;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: rgb(203, 136, 203);
+      color: white;
+    }
+    .console {
+      background: #111;
+      color: orange;
+      padding: 1rem;
+      margin-top: 1rem;
+      height: 150px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      border: 1px solid #444;
+      white-space: pre-wrap;
+    }
+    #scoreDisplay {
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: plum;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐍 Python Hard Challenges - 25 Questions</h1>
+  <div class="container">
+    <div class="problem" id="problemText"></div>
+    <textarea id="codeEditor"></textarea>
+
+    <div class="btn-group">
+      <button onclick="goToPrevious()">Previous</button>
+      <button onclick="runCode()">Run Code</button>
+      <button onclick="goToNext()">Next</button>
+    </div>
+
+    <div id="scoreDisplay">Score: 0 / 25</div>
+
+    <div class="console" id="consoleOutput">
+      Output will appear here...
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+  <script>
+    let pyodide = null;
+    async function loadPyodideAndPackages() {
+      pyodide = await loadPyodide();
+    }
+    loadPyodideAndPackages();
+
+   const questions = [
+  {
+    problem: "01. Implement a function to find the longest palindromic substring in a given string.",
+    boilerplate: `def longest_palindromic_substring(s):\n    # Your code here`,
+    answerCheck: code => code.includes('def longest_palindromic_substring') && code.includes('return')
+  },
+  {
+    problem: "02. Write a function to solve the N-Queens problem for a given N.",
+    boilerplate: `def solve_n_queens(n):\n    # Your code here`,
+    answerCheck: code => code.includes('def solve_n_queens') && code.includes('return')
+  },
+  {
+    problem: "03. Implement a function to perform the topological sort on a directed acyclic graph (DAG).",
+    boilerplate: `def topological_sort(graph):\n    # Your code here`,
+    answerCheck: code => code.includes('def topological_sort') && code.includes('return')
+  },
+  {
+    problem: "04. Write a function that finds all unique subsets of a list of integers (the power set).",
+    boilerplate: `def unique_subsets(nums):\n    # Your code here`,
+    answerCheck: code => code.includes('def unique_subsets') && code.includes('return')
+  },
+  {
+    problem: "05. Implement a function that finds the maximum sum subarray using Kadane's algorithm.",
+    boilerplate: `def max_subarray_sum(arr):\n    # Your code here`,
+    answerCheck: code => code.includes('def max_subarray_sum') && code.includes('return')
+  },
+  {
+    problem: "06. Write a program to solve the Sudoku puzzle using backtracking.",
+    boilerplate: `def solve_sudoku(board):\n    # Your code here`,
+    answerCheck: code => code.includes('def solve_sudoku') && code.includes('return')
+  },
+  {
+    problem: "07. Implement a function to serialize and deserialize a binary tree.",
+    boilerplate: `def serialize(root):\n    # Your code here\n\ndef deserialize(data):\n    # Your code here`,
+    answerCheck: code => code.includes('def serialize') && code.includes('def deserialize')
+  },
+  {
+    problem: "08. Write a function to implement the A* pathfinding algorithm.",
+    boilerplate: `def a_star_search(start, goal, graph):\n    # Your code here`,
+    answerCheck: code => code.includes('def a_star_search') && code.includes('return')
+  },
+  {
+    problem: "09. Implement a function that finds the median of two sorted arrays.",
+    boilerplate: `def find_median_sorted_arrays(nums1, nums2):\n    # Your code here`,
+    answerCheck: code => code.includes('def find_median_sorted_arrays') && code.includes('return')
+  },
+  {
+    problem: "10. Write a function to generate all valid combinations of n pairs of parentheses.",
+    boilerplate: `def generate_parentheses(n):\n    # Your code here`,
+    answerCheck: code => code.includes('def generate_parentheses') && code.includes('return')
+  },
+  {
+    problem: "11. Implement a Trie (prefix tree) with insert, search, and startsWith methods.",
+    boilerplate: `class Trie:\n    def __init__(self):\n        # Your code here\n    def insert(self, word):\n        # Your code here\n    def search(self, word):\n        # Your code here\n    def startsWith(self, prefix):\n        # Your code here`,
+    answerCheck: code => code.includes('class Trie') && code.includes('def insert') && code.includes('def search') && code.includes('def startsWith')
+  },
+  {
+    problem: "12. Write a function to solve the Word Ladder problem.",
+    boilerplate: `def word_ladder(beginWord, endWord, wordList):\n    # Your code here`,
+    answerCheck: code => code.includes('def word_ladder') && code.includes('return')
+  },
+  {
+    problem: "13. Implement a function to find the longest increasing subsequence in an array.",
+    boilerplate: `def longest_increasing_subsequence(nums):\n    # Your code here`,
+    answerCheck: code => code.includes('def longest_increasing_subsequence') && code.includes('return')
+  },
+  {
+    problem: "14. Write a function to count the number of islands in a 2D grid.",
+    boilerplate: `def num_islands(grid):\n    # Your code here`,
+    answerCheck: code => code.includes('def num_islands') && code.includes('return')
+  },
+  {
+    problem: "15. Implement a LRU (Least Recently Used) cache with get and put operations.",
+    boilerplate: `class LRUCache:\n    def __init__(self, capacity):\n        # Your code here\n    def get(self, key):\n        # Your code here\n    def put(self, key, value):\n        # Your code here`,
+    answerCheck: code => code.includes('class LRUCache') && code.includes('def get') && code.includes('def put')
+  },
+
+  {
+    problem: "16. Implement the Flood Fill algorithm (like the paint bucket tool).",
+    boilerplate: `def flood_fill(image, sr, sc, new_color):\n    # Your code here`,
+    answerCheck: code => code.includes('def flood_fill') && code.includes('return')
+  },
+  {
+    problem: "17. Write a function to find the kth smallest element in an unsorted array.",
+    boilerplate: `def kth_smallest(arr, k):\n    # Your code here`,
+    answerCheck: code => code.includes('def kth_smallest') && code.includes('return')
+  },
+  {
+    problem: "18. Implement a function to check if a binary tree is a valid Binary Search Tree (BST).",
+    boilerplate: `def is_valid_bst(root):\n    # Your code here`,
+    answerCheck: code => code.includes('def is_valid_bst') && code.includes('return')
+  },
+  {
+    problem: "19. Write a function that finds the largest rectangle in a histogram.",
+    boilerplate: `def largest_rectangle_area(heights):\n    # Your code here`,
+    answerCheck: code => code.includes('def largest_rectangle_area') && code.includes('return')
+  },
+  {
+    problem: "20. Implement a function to perform the merge sort algorithm.",
+    boilerplate: `def merge_sort(arr):\n    # Your code here`,
+    answerCheck: code => code.includes('def merge_sort') && code.includes('return')
+  },
+  {
+    problem: "21. Write a function that finds all the bridges in a graph (edges which removal increases the number of connected components).",
+    boilerplate: `def find_bridges(graph):\n    # Your code here`,
+    answerCheck: code => code.includes('def find_bridges') && code.includes('return')
+  },
+  {
+    problem: "22. Implement a function to solve the coin change problem (minimum coins needed).",
+    boilerplate: `def coin_change(coins, amount):\n    # Your code here`,
+    answerCheck: code => code.includes('def coin_change') && code.includes('return')
+  },
+  {
+    problem: "23. Write a function to generate all permutations of a list.",
+    boilerplate: `def permutations(nums):\n    # Your code here`,
+    answerCheck: code => code.includes('def permutations') && code.includes('return')
+  },
+  {
+    problem: "24. Implement the Rabin-Karp algorithm for substring search.",
+    boilerplate: `def rabin_karp(text, pattern):\n    # Your code here`,
+    answerCheck: code => code.includes('def rabin_karp') && code.includes('return')
+  },
+  {
+    problem: "25. Write a function to calculate the edit distance (Levenshtein distance) between two strings.",
+    boilerplate: `def edit_distance(s1, s2):\n    # Your code here`,
+    answerCheck: code => code.includes('def edit_distance') && code.includes('return')
+  }
+];
+
+    let currentIndex = 0;
+    let score = 0;
+    let answered = new Array(questions.length).fill(false);
+
+    function loadQuestion(index) {
+      currentIndex = index;
+      document.getElementById('problemText').innerText = questions[index].problem;
+      document.getElementById('codeEditor').value = questions[index].boilerplate;
+      document.getElementById('consoleOutput').innerText = "Output will appear here...";
+    }
+
+    loadQuestion(currentIndex);
+
+    function goToPrevious() {
+      if (currentIndex > 0) {
+        loadQuestion(currentIndex - 1);
+      }
+    }
+
+    function goToNext() {
+      if (currentIndex < questions.length - 1) {
+        loadQuestion(currentIndex + 1);
+      }
+    }
+
+    async function runCode() {
+      const code = document.getElementById('codeEditor').value;
+      const outputEl = document.getElementById('consoleOutput');
+
+      if (!pyodide) {
+        outputEl.innerText = '⚠️ Python engine still loading, please wait...';
+        return;
+      }
+
+      try {
+        // Capture print outputs
+        let output = "";
+        pyodide.setStdout({
+          batched: (data) => { output += data; }
+        });
+        pyodide.setStderr({
+          batched: (data) => { output += data; }
+        });
+
+        await pyodide.runPythonAsync(code);
+
+        pyodide.setStdout();
+        pyodide.setStderr();
+
+        outputEl.innerText = output || "✅ Code executed successfully with no output.";
+
+        // Simple answer checking (just basic)
+        if (!answered[currentIndex] && questions[currentIndex].answerCheck) {
+          if (questions[currentIndex].answerCheck(code)) {
+            score++;
+            answered[currentIndex] = true;
+            document.getElementById('scoreDisplay').innerText = `Score: ${score} / 25`;
+          }
+        }
+      } catch (err) {
+        pyodide.setStdout();
+        pyodide.setStderr();
+        outputEl.innerText = "❌ Error:\n" + err;
+      }
+    }
+  </script>
+</body>
+</html>

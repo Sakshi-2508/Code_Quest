@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Java Easy Challenges</title>
+<style>
+  body {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 1500px;
+      margin: auto;
+    }
+    h1 {
+      margin-bottom: 1rem;
+    }
+    .problem-description {
+      background: #272727;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      background: #141414;
+      color: #00ffa6;
+      border: none;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      padding: 1rem;
+      resize: vertical;
+    }
+    .console {
+      background: #141414;
+      color: #00ffa6;
+      padding: 1rem;
+      border-radius: 6px;
+      height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    button {
+      margin-top: 1rem;
+      background-color: #00bcd4;
+      border: none;
+      color: white;
+      font-weight: bold;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0097a7;
+    }
+</style>
+</head>
+<body>
+
+<h1>Java Hard Challenges</h1>
+
+<div id="problem"></div>
+
+<textarea id="codeEditor"></textarea>
+
+<div>
+  <button id="prevBtn" disabled>Previous</button>
+  <button id="runBtn">Run Code</button>
+  <button id="nextBtn">Next</button>
+</div>
+
+<div id="scoreDisplay" style="text-align: center; margin-top: 0.5rem; font-weight: bold;">
+      Score: 0 / 25
+    </div>
+ 
+
+<script>
+
+      const firebaseConfig = {
+    apiKey: "AIzaSyBTqasiZ6zn3D2oFdtwQFR8YowBGyUTzoI",
+    authDomain: "code-quest-c5cc6.firebaseapp.com",
+    projectId: "code-quest-c5cc6",
+    storageBucket: "code-quest-c5cc6.firebasestorage.app",
+    messagingSenderId: "166511404658",
+    appId: "1:166511404658:web:1d78060d55a26eaff884eb"
+  };
+
+    const questions = [
+  {
+    problem: 'Write a Java program to implement a thread-safe singleton pattern.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement a custom generic class.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to perform matrix multiplication.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement merge sort algorithm.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to serialize and deserialize an object.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement a producer-consumer problem using threads.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to find the shortest path in a graph using Dijkstra’s algorithm.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement a LRU cache.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to detect a cycle in a directed graph.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to solve the N-Queens problem using backtracking.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement a balanced binary search tree (AVL tree).',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement a thread pool.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to parse and evaluate a mathematical expression (e.g., “3 + 4 * 2”).',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to find all permutations of a string.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement a priority queue from scratch.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement a trie (prefix tree) data structure.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to find the longest increasing subsequence in an array.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement a radix sort algorithm.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement a graph using adjacency list and perform DFS traversal.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to find the median of two sorted arrays.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement a cache with expiration time.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement multithreading with thread synchronization.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement quicksort algorithm.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to find the maximum subarray sum using Kadane’s algorithm.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+  {
+    problem: 'Write a Java program to implement a binary heap.',
+    boilerplate: `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  },
+];
+
+  let currentIndex = 0;
+  let score = 0;
+
+  const problemEl = document.getElementById('problem');
+  const codeEditor = document.getElementById('codeEditor');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const runBtn = document.getElementById('runBtn');
+  const scoreEl = document.getElementById('scoreDisplay');
+  scoreEl.textContent = `Score: ${score} / ${questions.length}`;
+
+
+  function loadQuestion(index) {
+    const q = questions[index];
+    problemEl.innerHTML = `<h3>Question ${index + 1}:</h3><p>${q.problem}</p>`;
+    codeEditor.value = q.boilerplate;
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === questions.length - 1;
+  }
+
+  prevBtn.onclick = () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      loadQuestion(currentIndex);
+    }
+  };
+
+  nextBtn.onclick = () => {
+    if (currentIndex < questions.length - 1) {
+      currentIndex++;
+      loadQuestion(currentIndex);
+    }
+  };
+
+  runBtn.onclick = () => {
+    const userCode = codeEditor.value;
+    const valid = questions[currentIndex].validate(userCode);
+    if (valid) {
+      alert("Correct!");
+      if (!questions[currentIndex].scored) {
+        score++;
+        questions[currentIndex].scored = true;
+        scoreEl.textContent = `Score: ${score} / ${questions.length}`;
+      }
+    } else {
+      alert("Incorrect, try again.");
+    }
+  };
+
+  loadQuestion(currentIndex);
+</script>
+
+</body>
+</html>

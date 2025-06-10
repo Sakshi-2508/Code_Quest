@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Python Easy Challenges</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: plum;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 10px;
+    }
+    .problem {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      color: #fff;
+      min-height: 3rem;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      background-color: #1e1e1e;
+      color : orange;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 1rem;
+      font-family: monospace;
+      font-size: 0.95rem;
+      resize: vertical;
+    }
+    .btn-group {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    button {
+      background-color: plum;
+      border: none;
+      color: #1e1e1e;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: rgb(203, 136, 203);
+      color: white;
+    }
+    .console {
+      background: #111;
+      color: orange;
+      padding: 1rem;
+      margin-top: 1rem;
+      height: 150px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      border: 1px solid #444;
+      white-space: pre-wrap;
+    }
+    #scoreDisplay {
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: plum;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐍 Python Easy Challenges - 25 Questions</h1>
+  <div class="container">
+    <div class="problem" id="problemText"></div>
+    <textarea id="codeEditor"></textarea>
+
+    <div class="btn-group">
+      <button onclick="goToPrevious()">Previous</button>
+      <button onclick="runCode()">Run Code</button>
+      <button onclick="goToNext()">Next</button>
+    </div>
+
+    <div id="scoreDisplay">Score: 0 / 25</div>
+
+    <div class="console" id="consoleOutput">
+      Output will appear here...
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+  <script>
+    let pyodide = null;
+    async function loadPyodideAndPackages() {
+      pyodide = await loadPyodide();
+    }
+    loadPyodideAndPackages();
+
+    const questions = [
+      {
+        problem: "01. Fix the syntax of the Python function so that it returns the correct sum.",
+        boilerplate: `def add(a, b)\n    return a + b`,
+        answerCheck: code => code.includes('def add(') && code.includes('return a + b')
+      },
+      {
+        problem: "02. Write a Python program to print \"Hello, World!\" to the console.",
+        boilerplate: `print("Hello, World!")`,
+        answerCheck: code => code.includes('print("Hello, World!")')
+      },
+      {
+        problem: "03. Declare an integer variable named 'num' and assign it the value 10.",
+        boilerplate: `# Your code here`,
+        answerCheck: code => /num\s*=\s*10/.test(code)
+      },
+      {
+        problem: "04. Write a function that returns the square of a number.",
+        boilerplate: `def square(n):\n    # Your code here`,
+        answerCheck: code => code.includes('def square') && code.includes('return n * n')
+      },
+      {
+        problem: "05. Create a list named 'colors' containing 'red', 'green', and 'blue'.",
+        boilerplate: `# Your code here`,
+        answerCheck: code => /colors\s*=\s*\[['"]red['"],\s*['"]green['"],\s*['"]blue['"]\]/.test(code)
+      },
+      {
+        problem: "06. Write a function that prints whether a number is even or odd.",
+        boilerplate: `def check_even_odd(n):\n    # Your code here`,
+        answerCheck: code => code.includes('def check_even_odd') && code.includes('print')
+      },
+      {
+        problem: "07. Write a loop that prints numbers 1 through 5.",
+        boilerplate: `# Your code here`,
+        answerCheck: code => code.includes('for') && code.includes('print')
+      },
+      {
+        problem: "08. Write a function that returns the larger of two numbers.",
+        boilerplate: `def max_of_two(a, b):\n    # Your code here`,
+        answerCheck: code => code.includes('def max_of_two') && code.includes('return')
+      },
+      {
+        problem: "09. Print each character in the string 'Python' using a for loop.",
+        boilerplate: `# Your code here`,
+        answerCheck: code => code.includes('for') && code.includes('print')
+      },
+      {
+        problem: "10. Write a program that asks the user for their name and prints a greeting.",
+        boilerplate: `# Your code here`,
+        answerCheck: code => code.includes('input') && code.includes('print')
+      },
+      {
+        problem: "11. Fix the bug in the function that should return the length of a list.",
+        boilerplate: `def length(lst):\n    return len lst`,
+        answerCheck: code => code.includes('def length') && code.includes('len(')
+      },
+      {
+        problem: "12. Create a dictionary with keys 'name' and 'age' and values 'Alice' and 25.",
+        boilerplate: `# Your code here`,
+        answerCheck: code => code.includes('name') && code.includes('age') && code.includes('Alice') && code.includes('25')
+      },
+      {
+        problem: "13. Write a function that takes a list and returns the sum of its elements.",
+        boilerplate: `def sum_list(lst):\n    # Your code here`,
+        answerCheck: code => code.includes('def sum_list') && code.includes('return')
+      },
+      {
+        problem: "14. Use a loop to print all even numbers from 2 to 10.",
+        boilerplate: `# Your code here`,
+        answerCheck: code => code.includes('for') && code.includes('print')
+      },
+      {
+        problem: "15. Write a program that checks if a number is positive, negative, or zero.",
+        boilerplate: `# Your code here`,
+        answerCheck: code => code.includes('if') && code.includes('print')
+      },
+      {
+        problem: "16. Write a function that returns True if a string contains the letter 'a'.",
+        boilerplate: `def contains_a(text):\n    # Your code here`,
+        answerCheck: code => code.includes('def contains_a') && code.includes('return')
+      },
+      {
+        problem: "17. Create a tuple with the values 1, 2, 3, 4.",
+        boilerplate: `# Your code here`,
+        answerCheck: code => code.includes('(') && code.includes('1') && code.includes('2')
+      },
+      {
+        problem: "18. Swap the values of two variables a = 5 and b = 10.",
+        boilerplate: `a = 5\nb = 10\n# Your code here`,
+        answerCheck: code => code.includes('a = 5') && code.includes('b = 10')
+      },
+      {
+        problem: "19. Use a list comprehension to create a list of squares from 1 to 5.",
+        boilerplate: `# Your code here`,
+        answerCheck: code => code.includes('[') && code.includes('for') && code.includes('in')
+      },
+      {
+        problem: "20. Write a function that returns the reverse of a string.",
+        boilerplate: `def reverse_string(s):\n    # Your code here`,
+        answerCheck: code => code.includes('def reverse_string') && code.includes('return')
+      },
+      {
+        problem: "21. Write a while loop that prints numbers from 1 to 3.",
+        boilerplate: `# Your code here`,
+        answerCheck: code => code.includes('while') && code.includes('print')
+      },
+      {
+        problem: "22. Fix the function that should return the product of two numbers.",
+        boilerplate: `def multiply(a, b):\n    return a * b`,
+        answerCheck: code => code.includes('def multiply') && code.includes('return a * b')
+      },
+      {
+        problem: "23. Create a set with values 3, 5, 7 and add 9 to it.",
+        boilerplate: `# Your code here`,
+        answerCheck: code => code.includes('set') && code.includes('add(9)')
+      },
+      {
+        problem: "24. Write a function that checks if a given year is a leap year.",
+        boilerplate: `def is_leap_year(year):\n    # Your code here`,
+        answerCheck: code => code.includes('def is_leap_year') && code.includes('return')
+      },
+      {
+        problem: "25. Use a try-except block to catch division by zero.",
+        boilerplate: `try:\n    # Your code here\nexcept ZeroDivisionError:\n    print("Cannot divide by zero")`,
+        answerCheck: code => code.includes('try') && code.includes('except ZeroDivisionError')
+      }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let answered = new Array(questions.length).fill(false);
+
+    function loadQuestion(index) {
+      currentIndex = index;
+      document.getElementById('problemText').innerText = questions[index].problem;
+      document.getElementById('codeEditor').value = questions[index].boilerplate;
+      document.getElementById('consoleOutput').innerText = "Output will appear here...";
+    }
+
+    loadQuestion(currentIndex);
+
+    function goToPrevious() {
+      if (currentIndex > 0) {
+        loadQuestion(currentIndex - 1);
+      }
+    }
+
+    function goToNext() {
+      if (currentIndex < questions.length - 1) {
+        loadQuestion(currentIndex + 1);
+      }
+    }
+
+    async function runCode() {
+      const code = document.getElementById('codeEditor').value;
+      const outputEl = document.getElementById('consoleOutput');
+
+      if (!pyodide) {
+        outputEl.innerText = '⚠️ Python engine still loading, please wait...';
+        return;
+      }
+
+      try {
+        // Capture print outputs
+        let output = "";
+        pyodide.setStdout({
+          batched: (data) => { output += data; }
+        });
+        pyodide.setStderr({
+          batched: (data) => { output += data; }
+        });
+
+        await pyodide.runPythonAsync(code);
+
+        pyodide.setStdout();
+        pyodide.setStderr();
+
+        outputEl.innerText = output || "✅ Code executed successfully with no output.";
+
+        // Simple answer checking (just basic)
+        if (!answered[currentIndex] && questions[currentIndex].answerCheck) {
+          if (questions[currentIndex].answerCheck(code)) {
+            score++;
+            answered[currentIndex] = true;
+            document.getElementById('scoreDisplay').innerText = `Score: ${score} / 25`;
+          }
+        }
+      } catch (err) {
+        pyodide.setStdout();
+        pyodide.setStderr();
+        outputEl.innerText = "❌ Error:\n" + err;
+      }
+    }
+  </script>
+</body>
+</html>

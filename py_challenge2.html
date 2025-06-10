@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Python Easy Challenges</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: plum;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 10px;
+    }
+    .problem {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      color: #fff;
+      min-height: 3rem;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      background-color: #1e1e1e;
+      color : orange;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 1rem;
+      font-family: monospace;
+      font-size: 0.95rem;
+      resize: vertical;
+    }
+    .btn-group {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    button {
+      background-color: plum;
+      border: none;
+      color: #1e1e1e;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: rgb(203, 136, 203);
+      color: white;
+    }
+    .console {
+      background: #111;
+      color: orange;
+      padding: 1rem;
+      margin-top: 1rem;
+      height: 150px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      border: 1px solid #444;
+      white-space: pre-wrap;
+    }
+    #scoreDisplay {
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: plum;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐍 Python Medium Challenges - 25 Questions</h1>
+  <div class="container">
+    <div class="problem" id="problemText"></div>
+    <textarea id="codeEditor"></textarea>
+
+    <div class="btn-group">
+      <button onclick="goToPrevious()">Previous</button>
+      <button onclick="runCode()">Run Code</button>
+      <button onclick="goToNext()">Next</button>
+    </div>
+
+    <div id="scoreDisplay">Score: 0 / 25</div>
+
+    <div class="console" id="consoleOutput">
+      Output will appear here...
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+  <script>
+    let pyodide = null;
+    async function loadPyodideAndPackages() {
+      pyodide = await loadPyodide();
+    }
+    loadPyodideAndPackages();
+
+   const questions = [
+  {
+    problem: "01. Write a function to check if a string is a palindrome.",
+    boilerplate: `def is_palindrome(s):\n    # Your code here`,
+    answerCheck: code => code.includes('def is_palindrome') && code.includes('return')
+  },
+  {
+    problem: "02. Implement a function that returns the factorial of a number.",
+    boilerplate: `def factorial(n):\n    # Your code here`,
+    answerCheck: code => code.includes('def factorial') && code.includes('return')
+  },
+  {
+    problem: "03. Write a program to find the Fibonacci sequence up to n terms.",
+    boilerplate: `def fibonacci(n):\n    # Your code here`,
+    answerCheck: code => code.includes('def fibonacci') && code.includes('return')
+  },
+  {
+    problem: "04. Write a function to find the greatest common divisor (GCD) of two numbers.",
+    boilerplate: `def gcd(a, b):\n    # Your code here`,
+    answerCheck: code => code.includes('def gcd') && code.includes('return')
+  },
+  {
+    problem: "05. Create a function that removes duplicates from a list.",
+    boilerplate: `def remove_duplicates(lst):\n    # Your code here`,
+    answerCheck: code => code.includes('def remove_duplicates') && code.includes('return')
+  },
+  {
+    problem: "06. Write a program that sorts a list without using the built-in sort() function.",
+    boilerplate: `def custom_sort(lst):\n    # Your code here`,
+    answerCheck: code => code.includes('def custom_sort') && code.includes('return')
+  },
+  {
+    problem: "07. Implement binary search in a sorted list.",
+    boilerplate: `def binary_search(lst, target):\n    # Your code here`,
+    answerCheck: code => code.includes('def binary_search') && code.includes('return')
+  },
+  {
+    problem: "08. Write a function that checks if two strings are anagrams.",
+    boilerplate: `def are_anagrams(s1, s2):\n    # Your code here`,
+    answerCheck: code => code.includes('def are_anagrams') && code.includes('return')
+  },
+  {
+    problem: "09. Implement a function to find the second largest number in a list.",
+    boilerplate: `def second_largest(lst):\n    # Your code here`,
+    answerCheck: code => code.includes('def second_largest') && code.includes('return')
+  },
+  {
+    problem: "10. Write a program to count the occurrences of each character in a string.",
+    boilerplate: `def char_count(s):\n    # Your code here`,
+    answerCheck: code => code.includes('def char_count') && code.includes('return')
+  },
+  {
+    problem: "11. Write a function to merge two sorted lists into one sorted list.",
+    boilerplate: `def merge_sorted(lst1, lst2):\n    # Your code here`,
+    answerCheck: code => code.includes('def merge_sorted') && code.includes('return')
+  },
+  {
+    problem: "12. Implement a function to check if a number is prime.",
+    boilerplate: `def is_prime(n):\n    # Your code here`,
+    answerCheck: code => code.includes('def is_prime') && code.includes('return')
+  },
+  {
+    problem: "13. Write a function to reverse the words in a sentence.",
+    boilerplate: `def reverse_words(sentence):\n    # Your code here`,
+    answerCheck: code => code.includes('def reverse_words') && code.includes('return')
+  },
+  {
+    problem: "14. Write a program that finds the longest word in a list.",
+    boilerplate: `def longest_word(words):\n    # Your code here`,
+    answerCheck: code => code.includes('def longest_word') && code.includes('return')
+  },
+  {
+    problem: "15. Create a function to check if a list is sorted in ascending order.",
+    boilerplate: `def is_sorted(lst):\n    # Your code here`,
+    answerCheck: code => code.includes('def is_sorted') && code.includes('return')
+  },
+  {
+    problem: "16. Write a function to capitalize the first letter of each word in a string.",
+    boilerplate: `def capitalize_words(s):\n    # Your code here`,
+    answerCheck: code => code.includes('def capitalize_words') && code.includes('return')
+  },
+  {
+    problem: "17. Implement a function to flatten a nested list.",
+    boilerplate: `def flatten(nested_list):\n    # Your code here`,
+    answerCheck: code => code.includes('def flatten') && code.includes('return')
+  },
+  {
+    problem: "18. Write a function that counts the number of vowels in a string.",
+    boilerplate: `def count_vowels(s):\n    # Your code here`,
+    answerCheck: code => code.includes('def count_vowels') && code.includes('return')
+  },
+  {
+    problem: "19. Implement a function to check if a given year is a palindrome (e.g., 2002).",
+    boilerplate: `def is_year_palindrome(year):\n    # Your code here`,
+    answerCheck: code => code.includes('def is_year_palindrome') && code.includes('return')
+  },
+  {
+    problem: "20. Write a function to find the intersection of two lists.",
+    boilerplate: `def intersection(lst1, lst2):\n    # Your code here`,
+    answerCheck: code => code.includes('def intersection') && code.includes('return')
+  },
+  {
+    problem: "21. Write a program that finds the most frequent element in a list.",
+    boilerplate: `def most_frequent(lst):\n    # Your code here`,
+    answerCheck: code => code.includes('def most_frequent') && code.includes('return')
+  },
+  {
+    problem: "22. Implement a function to check if a string contains only digits.",
+    boilerplate: `def is_digit_string(s):\n    # Your code here`,
+    answerCheck: code => code.includes('def is_digit_string') && code.includes('return')
+  },
+  {
+    problem: "23. Write a function to rotate a list by k elements.",
+    boilerplate: `def rotate_list(lst, k):\n    # Your code here`,
+    answerCheck: code => code.includes('def rotate_list') && code.includes('return')
+  },
+  {
+    problem: "24. Write a program to calculate the sum of digits of a number.",
+    boilerplate: `def sum_of_digits(n):\n    # Your code here`,
+    answerCheck: code => code.includes('def sum_of_digits') && code.includes('return')
+  },
+  {
+    problem: "25. Implement a function to convert a decimal number to binary.",
+    boilerplate: `def decimal_to_binary(n):\n    # Your code here`,
+    answerCheck: code => code.includes('def decimal_to_binary') && code.includes('return')
+  },
+];
+
+    let currentIndex = 0;
+    let score = 0;
+    let answered = new Array(questions.length).fill(false);
+
+    function loadQuestion(index) {
+      currentIndex = index;
+      document.getElementById('problemText').innerText = questions[index].problem;
+      document.getElementById('codeEditor').value = questions[index].boilerplate;
+      document.getElementById('consoleOutput').innerText = "Output will appear here...";
+    }
+
+    loadQuestion(currentIndex);
+
+    function goToPrevious() {
+      if (currentIndex > 0) {
+        loadQuestion(currentIndex - 1);
+      }
+    }
+
+    function goToNext() {
+      if (currentIndex < questions.length - 1) {
+        loadQuestion(currentIndex + 1);
+      }
+    }
+
+    async function runCode() {
+      const code = document.getElementById('codeEditor').value;
+      const outputEl = document.getElementById('consoleOutput');
+
+      if (!pyodide) {
+        outputEl.innerText = '⚠️ Python engine still loading, please wait...';
+        return;
+      }
+
+      try {
+        // Capture print outputs
+        let output = "";
+        pyodide.setStdout({
+          batched: (data) => { output += data; }
+        });
+        pyodide.setStderr({
+          batched: (data) => { output += data; }
+        });
+
+        await pyodide.runPythonAsync(code);
+
+        pyodide.setStdout();
+        pyodide.setStderr();
+
+        outputEl.innerText = output || "✅ Code executed successfully with no output.";
+
+        // Simple answer checking (just basic)
+        if (!answered[currentIndex] && questions[currentIndex].answerCheck) {
+          if (questions[currentIndex].answerCheck(code)) {
+            score++;
+            answered[currentIndex] = true;
+            document.getElementById('scoreDisplay').innerText = `Score: ${score} / 25`;
+          }
+        }
+      } catch (err) {
+        pyodide.setStdout();
+        pyodide.setStderr();
+        outputEl.innerText = "❌ Error:\n" + err;
+      }
+    }
+  </script>
+</body>
+</html>

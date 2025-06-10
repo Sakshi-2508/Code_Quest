@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Levels</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      font-family: 'JetBrains Mono', monospace;
+      margin: 5rem;
+      /* padding: 2rem; */
+      overflow: hidden; /* Remove scrollbars */
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 3rem;
+      font-size: 2rem;
+    }
+
+    .card-container {
+      display: flex;
+      justify-content: center; /* Center cards */
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: nowrap;
+      overflow: hidden;
+    }
+
+    .level-card {
+      background-color: #272727;
+      border-radius: 10px;
+      padding: 1.5rem;
+      width: 320px;
+      box-shadow: 0 0 10px rgba(255, 193, 7, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .level-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 15px rgba(232, 4, 168, 0.943);
+    }
+
+    .level-title {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .difficulty {
+      font-weight: bold;
+      font-size: 0.95rem;
+      color: #54d708;
+      margin-bottom: 1rem;
+    }
+
+    .level-card p {
+      font-size: 0.95rem;
+      color: #ccc;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-play {
+      background-color: #ffc107;
+      color: #1e1e1e;
+      font-weight: bold;
+      padding: 0.6rem 1.4rem;
+      border-radius: 6px;
+      border: none;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .btn-play:hover {
+      background-color: rgb(203, 136, 203);
+      color: white;
+    }
+    .h1{
+        margin: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="h1">🐍 Python Code Quest - Choose Your Challenge</h1>
+
+  <div class="card-container">
+    <div class="level-card">
+      <div class="level-title">Challenge 1: Syntax Fix</div>
+      <div class="difficulty">Easy</div>
+      <p>Fix a Python function that should return the sum of two numbers.</p>
+      <a href="py_challenge1.html" class="btn btn-play">Play</a>
+    </div>
+
+    <div class="level-card">
+      <div class="level-title">Challenge 2: Loop Mastery</div>
+      <div class="difficulty">Medium</div>
+      <p>Use loops and conditions to solve a number-based puzzle.</p>
+      <a href="py_challenge2.html" class="btn btn-play">Play</a>
+    </div>
+
+    <div class="level-card">
+      <div class="level-title">Challenge 3: Algorithm Crunch</div>
+      <div class="difficulty">Hard</div>
+      <p>Implement a Python algorithm to solve a pathfinding problem efficiently.</p>
+      <a href="py_challenge3.html" class="btn btn-play">Play</a>
+    </div>
+  </div>
+
+  <script>
+    const select = document.getElementById('languageSelect');
+    if (select) {
+      select.addEventListener('change', function () {
+        const selected = this.value;
+        if (selected === 'python') {
+          window.location.href = 'pylevels.html';
+        } else if (selected === 'javascript') {
+          window.location.href = 'levels.html';
+        } else if (selected === 'java') {
+          window.location.href = 'javalevels.html';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
