@@ -32,20 +32,17 @@ Welcome to **Code Quest**, a fun and interactive web app where you can test your
 
 ## 🔥 Preview
 
-
-### Landing Page
-![ Landing Page](./screenshots/landing_pg.png)
+### Landing Page  
+<img src="./screenshots/landing_pg.png" alt="Landing Page" width="500" height="300" />
 
 ### 🟨 JavaScript Levels  
-![JavaScript Levels](./screenshots/javascript.png)
+<img src="./screenshots/javascript.png" alt="JavaScript Levels" width="500" height="300" />
 
 ### 🐍 Python Levels  
-![Python Levels](./screenshots/python.png)
+<img src="./screenshots/python.png" alt="Python Levels" width="500" height="300" />
 
 ### ☕ Java Levels  
-![Java Levels](./screenshots/java.png)
-
-> _You can place your actual screenshots in a folder named `screenshots/` in your repo_
+<img src="./screenshots/java.png" alt="Java Levels" width="500" height="300" />
 
 ---
 
